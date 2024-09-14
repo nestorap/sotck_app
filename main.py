@@ -59,7 +59,7 @@ with acciones:
         stdev = np.std(df2.loc[:,"% Change"]) * np.sqrt(252)
         st.write(f"La desviación estandar es {stdev * 100}%")
         st.write(f"Risk Ad. Return es {annual_return/(stdev*100)}")
-        # TODO
+        # TODO añadir y mejorar el df con colores. Añadir gráficos con leyenda usando filtros.
         # Tengo que incluir el riesgo, la desviación y las 10 noticias mas relevantes
     if sub_tab == "Análisis fundamental":
         # Instanciamos fundamentaldata
