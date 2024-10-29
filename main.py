@@ -8,6 +8,7 @@ from general import mostrar_informacion_general
 from acciones import mostrar_acciones
 from fundamental import mostrar_analisis_fundamental
 from tecnico import mostrar_analisis_tecnico
+from news import news
 
 # Cargamos variables de entorno
 load_dotenv()
@@ -27,17 +28,29 @@ with acciones:
     ticker = st.sidebar.text_input("Ticker")
     start_date = st.sidebar.date_input("Start date")
     end_date = st.sidebar.date_input("End date")
-    
+
     # Verifica si el ticker y las fechas están presentes antes de mostrar el contenido
     if ticker and start_date and end_date:
-        sub_tab = st.selectbox("Tipo de análisis", ["Información general", "Análisis fundamental", "Análisis técnico"])
-        
+        sub_tab = st.selectbox("Tipo de análisis", ["Información general","News", "Análisis fundamental", "Análisis técnico"])
+
         if sub_tab == "Información general":
             mostrar_acciones(ticker, start_date, end_date)
-        
+        elif sub_tab == "News":
+            df_news = news(ticker)
+            for i in range(10):
+                st.subheader(f"News {i + 1}")
+                st.write(df_news["published"][i])
+                st.write(df_news.loc[i,"title"])
+                st.write(df_news.loc[i, "summary"])
+                sentiment = df_news.loc[i, "sentiment_title"]
+                st.write(f"El sentimiento del títutlo --> {sentiment}")
+                news_sentiment = df_news.loc[i, "sentiment_summary"]
+                st.write(f"El sentimiento de la noticia es --> {news_sentiment}")
+
+
         elif sub_tab == "Análisis fundamental":
             mostrar_analisis_fundamental(api_key, ticker)
-        
+            
         elif sub_tab == "Análisis técnico":
             mostrar_analisis_tecnico()
     else:

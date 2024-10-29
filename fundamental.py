@@ -15,13 +15,16 @@ def obtener_income_statement(fd, ticker):
     return is1.apply(pd.to_numeric, errors="coerce")
 
 def mostrar_analisis_fundamental(api_key, ticker):
+    # Descargamos la data funamentel
     fd = FundamentalData(api_key, output_format="pandas")
+
+    # Obtenemos el balance anual
     st.subheader("Tabla de Balance anual")
-    
     balance_sheet = obtener_balance_sheet(fd, ticker)
     st.write(balance_sheet)
     
-    st.write("Cuenta de pérdidas y ganancias")
+    # Obtenemos la cuenta de pérdidas y ganancias
+    st.subheader("Cuenta de pérdidas y ganancias")
     income_statement = obtener_income_statement(fd, ticker)
     styled_is1 = income_statement.style.background_gradient(cmap="coolwarm")
     st.write(styled_is1)
