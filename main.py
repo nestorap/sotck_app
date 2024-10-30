@@ -2,6 +2,7 @@
 import streamlit as st
 from dotenv import load_dotenv
 import os
+import yfinance as yf
 
 # Importa las funciones de cada módulo
 from general import mostrar_informacion_general
@@ -28,13 +29,13 @@ with acciones:
     ticker = st.sidebar.text_input("Ticker")
     start_date = st.sidebar.date_input("Start date")
     end_date = st.sidebar.date_input("End date")
-
+    df = yf.download(ticker, start=start_date, end=end_date)
     # Verifica si el ticker y las fechas están presentes antes de mostrar el contenido
     if ticker and start_date and end_date:
         sub_tab = st.selectbox("Tipo de análisis", ["Información general","News", "Análisis fundamental", "Análisis técnico"])
 
         if sub_tab == "Información general":
-            mostrar_acciones(ticker, start_date, end_date)
+            mostrar_acciones(df=df, ticker=ticker)
         elif sub_tab == "News":
             df_news = news(ticker)
             for i in range(10):
@@ -52,6 +53,11 @@ with acciones:
             mostrar_analisis_fundamental(api_key, ticker)
             
         elif sub_tab == "Análisis técnico":
-            mostrar_analisis_tecnico()
+            tipo_analisis_tecnico = st.selectbox("Selecciona el tipo de analisis técnico",
+                                             ("Análisis 1", "Análisis 2"))
+            if tipo_analisis_tecnico == "Análisis 1":
+                st.write("Analisis 1")
+            elif tipo_analisis_tecnico == "Análisis 2":
+                mostrar_analisis_tecnico()
     else:
         st.write("Por favor, ingrese un ticker y seleccione un rango de fechas.")

@@ -1,12 +1,9 @@
 
 import streamlit as st
-import yfinance as yf
 import plotly.express as px
 import pandas as pd
 import numpy as np
 
-def descargar_datos(ticker, start_date, end_date):
-    return yf.download(ticker, start=start_date, end=end_date)
 
 def calcular_metricas(df):
     df2 = df.copy()
@@ -18,9 +15,8 @@ def calcular_metricas(df):
     
     return annual_return, stdev
 
-def mostrar_acciones(ticker, start_date, end_date):
+def mostrar_acciones(df:pd.DataFrame, ticker:str):
     st.subheader("Información general de la acción")
-    df = descargar_datos(ticker, start_date, end_date)
     
     if df.empty:
         st.warning("No se encontraron datos para el ticker ingresado en el rango de fechas seleccionado.")
