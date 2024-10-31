@@ -1,15 +1,16 @@
-
-import streamlit as st
-from dotenv import load_dotenv
 import os
 import yfinance as yf
+from news import news
+import streamlit as st
+from dotenv import load_dotenv
 
 # Importa las funciones de cada módulo
-from general import mostrar_informacion_general
 from acciones import mostrar_acciones
-from fundamental import mostrar_analisis_fundamental
 from tecnico import mostrar_analisis_tecnico
-from news import news
+from general import mostrar_informacion_general
+from fundamental import mostrar_analisis_fundamental
+
+
 
 # Cargamos variables de entorno
 load_dotenv()
@@ -53,11 +54,6 @@ with acciones:
             mostrar_analisis_fundamental(api_key, ticker)
             
         elif sub_tab == "Análisis técnico":
-            tipo_analisis_tecnico = st.selectbox("Selecciona el tipo de analisis técnico",
-                                             ("Análisis 1", "Análisis 2"))
-            if tipo_analisis_tecnico == "Análisis 1":
-                st.write("Analisis 1")
-            elif tipo_analisis_tecnico == "Análisis 2":
-                mostrar_analisis_tecnico()
+            mostrar_analisis_tecnico(ticker=ticker, df=df)
     else:
         st.write("Por favor, ingrese un ticker y seleccione un rango de fechas.")
