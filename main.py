@@ -15,6 +15,7 @@ from fundamental import mostrar_analisis_fundamental
 # Cargamos variables de entorno
 load_dotenv()
 api_key = os.getenv("API_KEY")
+api_ia_key = os.getenv("API_KEY_IA")
 
 # Iniciamos el título de la app
 st.title("Stock App")
@@ -51,7 +52,7 @@ with acciones:
 
 
         elif sub_tab == "Análisis fundamental":
-            mostrar_analisis_fundamental(api_key, ticker)
+            mostrar_analisis_fundamental(api_key, api_ia_key, ticker)
             
         elif sub_tab == "Análisis técnico":
             mostrar_analisis_tecnico(ticker=ticker, df=df)
