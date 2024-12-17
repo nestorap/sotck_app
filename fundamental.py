@@ -1,7 +1,6 @@
 
 import pandas as pd
 import streamlit as st
-from openai import OpenAI
 from alpha_vantage.fundamentaldata import FundamentalData
 
 
@@ -17,20 +16,8 @@ def obtener_income_statement(fd, ticker):
     is1.columns = list(income_statement.T.iloc[0])
     return is1.apply(pd.to_numeric, errors="coerce")
 
-def fundamental_promt(api_ia_key:str):
-    client = OpenAI(api_key=api_ia_key)
-    completion = client.chat.completions.create(
-        messages = [
-            {
-                "role" : "user",
-                "content" : "Di que esto es un test"
-            }
-        ],
-        model = "gpt-4o-mini"
-    )
-    return completion
 
-def mostrar_analisis_fundamental(api_key, api_ia_key, ticker):
+def mostrar_analisis_fundamental(api_key, ticker):
     # Descargamos la data funamentel
     fd = FundamentalData(api_key, output_format="pandas")
 
